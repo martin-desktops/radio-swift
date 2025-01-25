@@ -11,9 +11,11 @@ import SwiftUI
 struct NoStationsFavorited: View {
     
     var body: some View {
-        Spacer()
-        ContentUnavailableView("Add Stations", systemImage: "magnifyingglass" , description: Text("You haven't favorited a station yet."))
-        Spacer()
+        VStack {
+            Spacer()
+            ContentUnavailableView("Add Stations", systemImage: "magnifyingglass" , description: Text("You haven't favorited a station yet."))
+            Spacer()
+        }
     }
 }
 
