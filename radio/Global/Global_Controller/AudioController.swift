@@ -20,15 +20,12 @@ class AudioController {
         setupTask.cancel()
         setupTask = Task {
             
-            Logger.audioController.info("Started playRichStation()")
             
             await PlayingStation.shared.persistRichStation(richStation: richStation)
             let name = richStation.stationBase.name
-            Logger.audioController.info("Trying to play a \(name)")
             await PlayingStation.shared.setCurrentlyPlayingRichStation(richStation)
             await MainActor.run { PlayerState.shared.playerStateSetup(richStation) }
             guard let url = URL(string: richStation.stationBase.url) else {
-                Logger.audioController.error("Couldn't create URL - \(richStation.stationBase.name): \(richStation.stationBase.url)")
                 await pause()
                 return
             }
@@ -40,7 +37,6 @@ class AudioController {
             await LockscreenController.shared.setupRemoteCommandCenterForLockScreenInput()
             await LockscreenController.shared.updateInfoCenterWithPlayingStation()
             
-            Logger.audioController.notice("🟩🎉Setup of \(richStation.stationBase.name) is done.")
             
         }
     }
