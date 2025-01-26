@@ -48,11 +48,13 @@ class PlayingStation {
     func persistRichStation(richStation: RichStation) async {
         Logger.playingStationManager.info("Trying to persist a station")
         Persistance.shared.container.mainContext.insert(richStation)
-        do {
-            try Persistance.shared.container.mainContext.save()
-            Logger.playingStationManager.info("Persisted \(richStation.stationBase.name)")
-        } catch {
-            fatalError("Cannot cache \(richStation.stationBase.name)")
+        if Persistance.shared.container.mainContext.hasChanges {
+            do {
+                try Persistance.shared.container.mainContext.save()
+                Logger.playingStationManager.info("Persisted \(richStation.stationBase.name)")
+            } catch {
+                fatalError("Cannot cache \(richStation.stationBase.name)")
+            }
         }
     }
     
