@@ -22,6 +22,7 @@ class AudioController {
             
             
             await PlayingStation.shared.persistRichStation(richStation: richStation)
+            let name = richStation.stationBase.name
             await PlayingStation.shared.setCurrentlyPlayingRichStation(richStation)
             await MainActor.run { PlayerState.shared.playerStateSetup(richStation) }
             guard let url = URL(string: richStation.stationBase.url) else {
